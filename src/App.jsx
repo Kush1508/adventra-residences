@@ -15,6 +15,7 @@ import { MessageSquare } from 'lucide-react';
 export default function App() {
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [isApartmentsOpen, setIsApartmentsOpen] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState(null);
 
   return (
     <div className="relative min-h-screen bg-linen text-ink overflow-x-clip selection:bg-powder selection:text-ink">
@@ -62,7 +63,8 @@ export default function App() {
       <ApartmentsCatalogModal
         isOpen={isApartmentsOpen}
         onClose={() => setIsApartmentsOpen(false)}
-        onOpenInquiry={() => {
+        onSelectUnit={(unit) => {
+          setSelectedUnit(unit);
           setIsApartmentsOpen(false);
           setIsInquiryOpen(true);
         }}
@@ -71,7 +73,11 @@ export default function App() {
       {/* 12. VIP Inquiry Modal with Instant WhatsApp Dispatch */}
       <InquiryModal
         isOpen={isInquiryOpen}
-        onClose={() => setIsInquiryOpen(false)}
+        onClose={() => {
+          setIsInquiryOpen(false);
+          setSelectedUnit(null);
+        }}
+        selectedUnit={selectedUnit}
       />
 
       {/* 13. Floating Quick WhatsApp Action */}

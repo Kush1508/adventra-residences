@@ -6,6 +6,14 @@ export default function Footer({ onOpenInquiry }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-ink text-linen py-20 border-t border-linen/10 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -15,7 +23,7 @@ export default function Footer({ onOpenInquiry }) {
             <span className="text-[10px] uppercase tracking-[0.3em] font-mono text-linen/50 block mb-2">
               Begin Your Journey
             </span>
-            <h3 className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-white font-light tracking-tight">
+            <h3 className="font-editorial text-3xl sm:text-5xl lg:text-6xl text-white font-light tracking-tight">
               Experience Elevated Living in Gaya
             </h3>
           </div>
@@ -116,11 +124,11 @@ export default function Footer({ onOpenInquiry }) {
                 Explore
               </h4>
               <ul className="space-y-2 text-xs text-linen/70">
-                <li><a href="#hero" className="hover:text-white transition-colors">Hero Overview</a></li>
-                <li><a href="#concept" className="hover:text-white transition-colors">The Philosophy</a></li>
-                <li><a href="#projects" className="hover:text-white transition-colors">Residences Portfolio</a></li>
-                <li><a href="#amenities" className="hover:text-white transition-colors">Wellness Amenities</a></li>
-                <li><a href="#location" className="hover:text-white transition-colors">Location & Connectivity</a></li>
+                <li><a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className="hover:text-white transition-colors cursor-pointer">Hero Overview</a></li>
+                <li><a href="#concept" onClick={(e) => handleNavClick(e, 'concept')} className="hover:text-white transition-colors cursor-pointer">The Philosophy</a></li>
+                <li><a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-white transition-colors cursor-pointer">Residences Portfolio</a></li>
+                <li><a href="#amenities" onClick={(e) => handleNavClick(e, 'amenities')} className="hover:text-white transition-colors cursor-pointer">Wellness Amenities</a></li>
+                <li><a href="#location" onClick={(e) => handleNavClick(e, 'location')} className="hover:text-white transition-colors cursor-pointer">Location & Connectivity</a></li>
               </ul>
             </div>
 

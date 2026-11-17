@@ -19,6 +19,15 @@ export default function Navbar({ onOpenInquiry, onOpenApartments }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <header
@@ -31,7 +40,11 @@ export default function Navbar({ onOpenInquiry, onOpenApartments }) {
         <div className="w-full px-6 sm:px-10 md:px-14 flex items-start justify-between">
           {/* Left Brand Mark & Location */}
           <div className="flex items-center gap-4">
-            <a href="#hero" className="flex items-center gap-3 group">
+            <a
+              href="#hero"
+              onClick={(e) => handleNavClick(e, 'hero')}
+              className="flex items-center gap-3 group"
+            >
               {/* Rotating Scroll Badge */}
               <div className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
                 <svg
@@ -74,78 +87,84 @@ export default function Navbar({ onOpenInquiry, onOpenApartments }) {
           <nav className={`hidden lg:flex items-center gap-8 pt-3 transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <a
               href="#concept"
-              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors"
+              onClick={(e) => handleNavClick(e, 'concept')}
+              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors cursor-pointer"
             >
               The Concept
             </a>
             <a
               href="#projects"
-              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors"
+              onClick={(e) => handleNavClick(e, 'projects')}
+              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors cursor-pointer"
             >
               Residences
             </a>
             <a
               href="#amenities"
-              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors"
+              onClick={(e) => handleNavClick(e, 'amenities')}
+              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors cursor-pointer"
             >
               Amenities
             </a>
             <a
               href="#location"
-              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors"
+              onClick={(e) => handleNavClick(e, 'location')}
+              className="text-xs uppercase tracking-[0.2em] font-medium text-ink hover:text-ink/60 transition-colors cursor-pointer"
             >
               Location
             </a>
           </nav>
 
-          {/* Right Action Links (Exact 1:1 replica of media_1794912431919.png) */}
-          <div className="flex flex-col items-end text-right select-none pt-1">
-            {/* SELECT / AN APARTMENT (Two-line Didone with hairline underline under AN APARTMENT) */}
-            <button
-              onClick={onOpenApartments}
-              className={`group flex flex-col items-end font-editorial text-sm sm:text-base md:text-[18px] uppercase tracking-[0.08em] leading-[1.08] transition-all hover:opacity-80 ${
-                scrolled ? 'text-ink' : 'text-white'
-              }`}
-            >
-              <span>SELECT</span>
-              <span className={`border-b pb-0.5 ${scrolled ? 'border-ink/60' : 'border-white'}`}>
-                AN APARTMENT
-              </span>
-            </button>
+          {/* Right Action Links & Mobile Menu Button */}
+          <div className="flex items-center gap-3 sm:gap-5">
+            <div className="flex flex-col items-end text-right select-none pt-1">
+              {/* SELECT / AN APARTMENT (Two-line Didone with hairline underline under AN APARTMENT) */}
+              <button
+                onClick={onOpenApartments}
+                className={`group flex flex-col items-end font-editorial text-sm sm:text-base md:text-[18px] uppercase tracking-[0.08em] leading-[1.08] transition-all hover:opacity-80 ${
+                  scrolled ? 'text-ink' : 'text-white'
+                }`}
+              >
+                <span>SELECT</span>
+                <span className={`border-b pb-0.5 ${scrolled ? 'border-ink/60' : 'border-white'}`}>
+                  AN APARTMENT
+                </span>
+              </button>
 
-            {/* BOOK A CALL */}
-            <button
-              onClick={onOpenInquiry}
-              className={`text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] transition-colors mt-2 ${
-                scrolled ? 'text-ink/70 hover:text-ink' : 'text-white/80 hover:text-white'
-              }`}
-            >
-              BOOK A CALL
-            </button>
+              {/* BOOK A CALL */}
+              <button
+                onClick={onOpenInquiry}
+                className={`text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] transition-colors mt-2 ${
+                  scrolled ? 'text-ink/70 hover:text-ink' : 'text-white/80 hover:text-white'
+                }`}
+              >
+                BOOK A CALL
+              </button>
 
-            {/* CONTACT */}
-            <a
-              href="https://wa.me/916207282057?text=Hello%20AdVentra%20Residences%2C%20I%20would%20like%20to%20inquire%20about%20your%20luxury%20projects%20in%20Gaya."
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] transition-colors mt-1 ${
-                scrolled ? 'text-ink/70 hover:text-ink' : 'text-white/80 hover:text-white'
+              {/* CONTACT */}
+              <a
+                href="https://wa.me/916207282057?text=Hello%20AdVentra%20Residences%2C%20I%20would%20like%20to%20inquire%20about%20your%20luxury%20projects%20in%20Gaya."
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.25em] transition-colors mt-1 ${
+                  scrolled ? 'text-ink/70 hover:text-ink' : 'text-white/80 hover:text-white'
+                }`}
+              >
+                CONTACT
+              </a>
+            </div>
+
+            {/* Mobile Menu Trigger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`lg:hidden p-2 rounded-full transition-colors mt-1 ${
+                scrolled ? 'text-ink hover:bg-ink/5' : 'text-white hover:bg-white/10'
               }`}
+              aria-label="Toggle menu"
             >
-              CONTACT
-            </a>
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
-
-          {/* Mobile Menu Trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-full transition-colors mt-1 ${
-              scrolled ? 'text-ink hover:bg-ink/5' : 'text-white hover:bg-white/10'
-            }`}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </header>
 
@@ -158,28 +177,28 @@ export default function Navbar({ onOpenInquiry, onOpenApartments }) {
             </span>
             <a
               href="#concept"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, 'concept')}
               className="text-3xl font-editorial tracking-tight text-ink hover:text-ink/60"
             >
               The Concept
             </a>
             <a
               href="#projects"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, 'projects')}
               className="text-3xl font-editorial tracking-tight text-ink hover:text-ink/60"
             >
               Featured Residences
             </a>
             <a
               href="#amenities"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, 'amenities')}
               className="text-3xl font-editorial tracking-tight text-ink hover:text-ink/60"
             >
               Wellness & Amenities
             </a>
             <a
               href="#location"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, 'location')}
               className="text-3xl font-editorial tracking-tight text-ink hover:text-ink/60"
             >
               Prime Gaya Location

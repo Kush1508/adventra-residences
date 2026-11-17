@@ -101,29 +101,18 @@ export default function ApartmentsCatalogModal({ isOpen, onClose, onSelectUnit }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-linen text-ink select-none animate-in fade-in duration-300">
-      {/* 
-        Top Right Hanging Bougainvillea Vine 
-        (Exact visual from media_1794910944344.png)
-      */}
-      <div className="absolute top-0 right-0 w-64 sm:w-80 md:w-[420px] pointer-events-none z-10 opacity-95">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          webkit-playsinline="true"
-          disablePictureInPicture
-          className="w-full h-auto object-contain"
-        >
-          <source src="/assets/flowers/bougainvillea_01.webm" type="video/webm" />
-        </video>
-      </div>
-
       {/* Top Header Row with Rotating Seal and Close */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-14 pt-8 flex items-center justify-between relative z-20">
-        {/* Left Circular Badge */}
-        <div className="flex items-center gap-3">
-          <div className="w-14 h-14 relative flex items-center justify-center">
+        {/* Left Circular Badge & Brand Link to Home */}
+        <button
+          onClick={() => {
+            onClose();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center gap-3 group cursor-pointer text-left focus:outline-none"
+          title="Return to Home"
+        >
+          <div className="w-14 h-14 relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <svg viewBox="0 0 120 120" className="w-full h-full animate-spin-slow text-ink">
               <defs>
                 <path id="catTopArc" d="M 20,60 A 40,40 0 0 1 100,60" />
@@ -143,10 +132,10 @@ export default function ApartmentsCatalogModal({ isOpen, onClose, onSelectUnit }
               </svg>
             </div>
           </div>
-          <span className="text-xs font-mono uppercase tracking-[0.2em] text-ink/60">
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-ink/70 group-hover:text-ink transition-colors underline-offset-4 group-hover:underline">
             AdVentra Residences
           </span>
-        </div>
+        </button>
 
         {/* Right Close Button */}
         <button
@@ -159,15 +148,15 @@ export default function ApartmentsCatalogModal({ isOpen, onClose, onSelectUnit }
       </div>
 
       {/* Main Title Row: [APARTMENTS] on left, [165] on right */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-14 pt-12 pb-8 flex items-baseline justify-between border-b border-ink/10 relative z-20">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-14 pt-8 sm:pt-12 pb-6 sm:pb-8 flex items-baseline justify-between border-b border-ink/10 relative z-20">
         <div>
-          <h1 className="font-editorial text-6xl sm:text-8xl md:text-9xl font-light tracking-tight uppercase leading-none">
+          <h1 className="font-editorial text-4xl sm:text-7xl md:text-9xl font-light tracking-tight uppercase leading-none">
             Apartments
           </h1>
         </div>
 
         <div>
-          <span className="font-editorial text-6xl sm:text-8xl md:text-9xl font-light tracking-tight text-ink/90">
+          <span className="font-editorial text-4xl sm:text-7xl md:text-9xl font-light tracking-tight text-ink/90">
             165
           </span>
         </div>

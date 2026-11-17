@@ -44,7 +44,7 @@ const panels = [
   },
 ];
 
-export default function HorizontalPanels({ onOpenInquiry }) {
+export default function HorizontalPanels({ onOpenInquiry, onOpenApartments }) {
   const containerRef = useRef(null);
   const trackRef = useRef(null);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -70,6 +70,7 @@ export default function HorizontalPanels({ onOpenInquiry }) {
         x: () => -getScrollDistance(),
         ease: 'none',
         scrollTrigger: {
+          id: 'projectsScrollTrigger',
           trigger: container,
           pin: true,
           scrub: 0.8,
@@ -91,28 +92,38 @@ export default function HorizontalPanels({ onOpenInquiry }) {
 
   const scrollToPanel = (idx) => {
     setActiveIdx(idx);
-    if (trackRef.current) {
-      const isDesktop = window.innerWidth >= 768;
-      if (!isDesktop) {
-        const card = trackRef.current.children[idx];
-        if (card) {
-          card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-      } else {
-        // On desktop, scroll the window to the exact point in the pin
-        const st = ScrollTrigger.getById(containerRef.current);
-        if (st) {
-          const targetProgress = idx / (panels.length - 1);
-          const targetY = st.start + (st.end - st.start) * targetProgress;
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-        }
+    const isDesktop = window.innerWidth >= 768;
+    if (!isDesktop) {
+      if (trackRef.current && trackRef.current.children[idx]) {
+        trackRef.current.children[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    } else {
+      // On desktop, scroll the window to the exact point in the pin
+      const st = ScrollTrigger.getById('projectsScrollTrigger');
+      if (st) {
+        const targetProgress = idx / (panels.length - 1);
+        const targetY = st.start + (st.end - st.start) * targetProgress;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      } else if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleMobileScroll = (e) => {
+    if (window.innerWidth < 768) {
+      const scrollLeft = e.target.scrollLeft;
+      const cardWidth = e.target.offsetWidth * 0.85;
+      if (cardWidth > 0) {
+        const newIdx = Math.round(scrollLeft / cardWidth);
+        setActiveIdx(Math.min(panels.length - 1, Math.max(0, newIdx)));
       }
     }
   };
 
   return (
     <section
-      id="horizontal-panels"
+      id="projects"
       ref={containerRef}
       className="relative w-full h-screen bg-[#121824] text-linen overflow-hidden flex flex-col justify-between pt-24 sm:pt-28 pb-6 sm:pb-8 px-6 sm:px-10 md:px-14 select-none"
     >
@@ -133,7 +144,7 @@ export default function HorizontalPanels({ onOpenInquiry }) {
           <button
             onClick={() => scrollToPanel(Math.max(0, activeIdx - 1))}
             disabled={activeIdx === 0}
-            className="p-1 rounded-full text-white/60 hover:text-white disabled:opacity-20 transition-all hover:scale-110"
+            className="p-1 rounded-full text-white/60 hover:text-white disabled:opacity-20 transition-all hover:scale-110 cursor-pointer"
             aria-label="Previous project"
           >
             <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
@@ -146,7 +157,7 @@ export default function HorizontalPanels({ onOpenInquiry }) {
           <button
             onClick={() => scrollToPanel(Math.min(panels.length - 1, activeIdx + 1))}
             disabled={activeIdx === panels.length - 1}
-            className="p-1 rounded-full text-white/60 hover:text-white disabled:opacity-20 transition-all hover:scale-110"
+            className="p-1 rounded-full text-white/60 hover:text-white disabled:opacity-20 transition-all hover:scale-110 cursor-pointer"
             aria-label="Next project"
           >
             <ChevronRight className="w-5 h-5 stroke-[1.5]" />
@@ -166,7 +177,10 @@ export default function HorizontalPanels({ onOpenInquiry }) {
         Glides seamlessly from right to left across the screen as user scrolls down.
         Zero dead space — immediately followed by next section when complete.
       */}
-      <div className="relative my-auto w-full overflow-x-auto md:overflow-visible py-2 no-scrollbar">
+      <div
+        onScroll={handleMobileScroll}
+        className="relative my-auto w-full overflow-x-auto md:overflow-visible py-2 no-scrollbar snap-x"
+      >
         <div
           ref={trackRef}
           className="flex gap-6 sm:gap-8 md:gap-10 transition-transform duration-100 ease-out will-change-transform pl-1 sm:pl-2"
@@ -174,7 +188,7 @@ export default function HorizontalPanels({ onOpenInquiry }) {
           {panels.map((panel, idx) => (
             <div
               key={panel.num}
-              className={`w-[84vw] sm:w-[62vw] md:w-[46vw] lg:w-[36vw] max-w-[480px] shrink-0 rounded-2xl bg-white/[0.05] backdrop-blur-md border p-5 sm:p-7 flex flex-col justify-between transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${
+              className={`w-[84vw] sm:w-[62vw] md:w-[46vw] lg:w-[36vw] max-w-[480px] shrink-0 snap-center rounded-2xl bg-white/[0.05] backdrop-blur-md border p-5 sm:p-7 flex flex-col justify-between transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${
                 activeIdx === idx
                   ? 'border-[#d4af37]/60 shadow-[0_20px_60px_rgba(212,175,55,0.15)]'
                   : 'border-white/10 hover:border-[#d4af37]/40'
@@ -221,8 +235,15 @@ export default function HorizontalPanels({ onOpenInquiry }) {
               {/* Panel Footer CTA */}
               <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between">
                 <button
-                  onClick={onOpenInquiry}
-                  className="text-xs uppercase tracking-widest text-[#d4af37] hover:text-white flex items-center gap-1.5 transition-colors font-mono font-medium"
+                  onClick={() => {
+                    if (idx === 0 || idx === 1) {
+                      if (onOpenApartments) onOpenApartments();
+                      else onOpenInquiry();
+                    } else {
+                      onOpenInquiry();
+                    }
+                  }}
+                  className="text-xs uppercase tracking-widest text-[#d4af37] hover:text-white flex items-center gap-1.5 transition-colors font-mono font-medium cursor-pointer"
                 >
                   <span>Explore Details</span>
                   <ArrowRight className="w-3.5 h-3.5" />

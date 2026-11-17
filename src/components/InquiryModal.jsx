@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X, Send, CheckCircle2, MessageSquare, Phone, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function InquiryModal({ isOpen, onClose }) {
+export default function InquiryModal({ isOpen, onClose, selectedUnit }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -12,6 +12,17 @@ export default function InquiryModal({ isOpen, onClose }) {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+
+  React.useEffect(() => {
+    if (selectedUnit) {
+      const isBhava = selectedUnit.development.includes('Bhava') && !selectedUnit.development.includes('Nawal');
+      setFormData((prev) => ({
+        ...prev,
+        project: isBhava ? 'Bhava Tower (Sita Kund Bypass)' : 'Nawal Shiv Bhava Tower (AP Colony)',
+        message: `Inquiring about ${selectedUnit.typology} (${selectedUnit.size}, ${selectedUnit.price}, ${selectedUnit.completion}).`,
+      }));
+    }
+  }, [selectedUnit]);
 
   if (!isOpen) return null;
 
@@ -26,12 +37,17 @@ export default function InquiryModal({ isOpen, onClose }) {
     setSubmitted(true);
 
     // Prepare WhatsApp Message
+    const unitDetails = selectedUnit
+      ? `*Selected Unit:* ${selectedUnit.development} - ${selectedUnit.typology} (${selectedUnit.size})\n*Price Indication:* ${selectedUnit.price}\n`
+      : '';
+
     const text = encodeURIComponent(
       `*New VIP Inquiry - AdVentra Residences*\n\n` +
       `*Name:* ${formData.name}\n` +
       `*Phone:* ${formData.phone}\n` +
       `*Email:* ${formData.email}\n` +
       `*Project of Interest:* ${formData.project}\n` +
+      unitDetails +
       `*Budget Range:* ${formData.budget}\n` +
       `*Notes:* ${formData.message || 'Please send brochure & floor plans.'}`
     );
@@ -44,7 +60,7 @@ export default function InquiryModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-ink/70 backdrop-blur-md animate-in fade-in duration-300">
-      <div className="relative w-full max-w-lg bg-linen rounded-3xl p-6 sm:p-10 shadow-2xl border border-ink/15 overflow-hidden">
+      <div className="relative w-full max-w-lg bg-linen rounded-3xl p-6 sm:p-10 shadow-2xl border border-ink/15 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -67,6 +83,16 @@ export default function InquiryModal({ isOpen, onClose }) {
                 Connect with our executive sales desk. Inquiries are handled with complete confidentiality and immediate priority.
               </p>
             </div>
+
+            {selectedUnit && (
+              <div className="mb-4 p-3 rounded-xl bg-ink/5 border border-ink/10 flex items-center justify-between text-xs font-mono">
+                <div>
+                  <span className="text-ink/50 text-[10px] block uppercase">Inquiring For</span>
+                  <strong className="text-ink font-semibold">{selectedUnit.development} • {selectedUnit.typology}</strong>
+                </div>
+                <span className="text-emerald-700 font-semibold">{selectedUnit.price}</span>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

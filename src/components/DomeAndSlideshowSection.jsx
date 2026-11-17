@@ -39,14 +39,14 @@ export default function DomeAndSlideshowSection() {
   const current = slides[activeSlide];
 
   return (
-    <section className="relative w-full bg-[#b5cedb] text-[#17233b] overflow-hidden rounded-t-[25rem] sm:rounded-t-[45rem] md:rounded-t-[70rem] -mt-16 sm:-mt-24 md:-mt-36 z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.35)]">
+    <section className="relative w-full bg-[#b5cedb] text-[#17233b] overflow-hidden rounded-t-[14rem] sm:rounded-t-[35rem] md:rounded-t-[70rem] -mt-16 sm:-mt-24 md:-mt-36 z-20 shadow-[0_-25px_60px_rgba(0,0,0,0.35)]">
       {/* ========================================================
           1. THE HUGE POWDER-BLUE ARCHED DOME TRANSITION
           (Exact replica of media_1794911012408.png)
       ======================================================== */}
       <div className="pt-24 pb-16 md:pt-36 md:pb-20 max-w-6xl mx-auto px-6 flex flex-col items-center justify-center text-center">
         {/* Curved Arched Heading SVG */}
-        <div className="w-full max-w-4xl h-44 sm:h-56 md:h-72 relative flex items-center justify-center">
+        <div className="w-full max-w-4xl h-36 sm:h-56 md:h-72 relative flex items-center justify-center">
           <svg viewBox="0 0 1200 400" className="w-full h-full overflow-visible">
             <defs>
               <path
@@ -101,7 +101,7 @@ export default function DomeAndSlideshowSection() {
       ======================================================== */}
       <div className="relative max-w-5xl mx-auto px-6 pb-20 flex flex-col items-center text-center">
         {/* Massive Serif Title */}
-        <h2 className="font-editorial text-5xl sm:text-6xl md:text-8xl text-[#17233b] font-light tracking-tight mb-8 sm:mb-12 transition-all duration-700 uppercase">
+        <h2 className="font-editorial text-4xl sm:text-6xl md:text-8xl text-[#17233b] font-light tracking-tight mb-8 sm:mb-12 transition-all duration-700 uppercase">
           {current.title}
         </h2>
 

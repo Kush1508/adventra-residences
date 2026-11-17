@@ -18,7 +18,7 @@ export default function ConceptAndLocationSequence({ onOpenApartments }) {
           STAGE 1: THE CONCEPT (Linen Cream with Hanging Bougainvillea)
           (Exact replica of media_1794911222202.png & media_1794911251663.png)
       ======================================================== */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 py-24 text-center overflow-hidden">
+      <section id="concept" className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 py-24 text-center overflow-hidden">
         {/* Top-Left Hanging Bougainvillea Alpha Video Loop */}
         <div className="absolute top-0 left-0 w-64 sm:w-96 md:w-[480px] pointer-events-none z-10 select-none">
           <video
@@ -119,7 +119,7 @@ export default function ConceptAndLocationSequence({ onOpenApartments }) {
           STAGE 3: THE ROUTE TIMELINE (THE LANDMARK YOU WANTED *yours* THIS YEAR)
           (Exact replica of media_1794911338522.png & media_1794911351604.png)
       ======================================================== */}
-      <section className="relative pt-24 pb-20 px-6 max-w-7xl mx-auto overflow-hidden">
+      <section id="location" className="relative pt-24 pb-20 px-6 max-w-7xl mx-auto overflow-hidden">
 
         {/* Heading: THE LANDMARK YOU WANTED *yours* THIS YEAR */}
         <div className="text-center max-w-4xl mx-auto mb-16 relative z-10 px-4">
@@ -143,7 +143,37 @@ export default function ConceptAndLocationSequence({ onOpenApartments }) {
             />
           </div>
 
-          {/* Interactive Stops overlay along the route */}
+          {/* Mobile view of route timeline stops */}
+          <div className="sm:hidden flex overflow-x-auto gap-3 py-4 px-1 no-scrollbar snap-x">
+            {stops.map((stop, idx) => (
+              <div
+                key={idx}
+                className="shrink-0 snap-center flex flex-col items-center min-w-[130px] p-3 rounded-2xl bg-white/70 border border-[#17233b]/10 backdrop-blur-xs text-center"
+              >
+                <div className="w-2 h-2 rounded-full bg-[#17233b] mb-2 animate-pulse" />
+                {stop.isEmblem ? (
+                  <div className="w-6 h-6 text-[#17233b] mb-1">
+                    <svg viewBox="0 0 40 40" fill="none" className="w-full h-full">
+                      <path d="M6.55 9.12C4.81 7.38 4.69 4.69 4.69 4.69C4.69 4.69 7.38 4.82 9.12 6.56C10.86 8.3 10.98 10.99 10.98 10.99C10.98 10.99 8.29 10.86 6.55 9.12Z" fill="currentColor"/>
+                      <path d="M20 0L16.16 8.12C15.59 9.31 15.59 10.69 16.16 11.88L18.5 16.83C17.77 17.18 17.19 17.78 16.85 18.51L11.88 16.16C10.69 15.59 9.31 15.59 8.12 16.16L0 20V19.18C0 18.35 0.42 17.58 1.12 17.14L7.64 13C9.08 12.08 10.92 12.08 12.36 13L14.11 14.11L13 12.36C12.08 10.92 12.08 9.08 13 7.64L17.14 1.12C17.58 0.42 18.35 0 19.18 0L20 0Z" fill="currentColor"/>
+                      <path d="M33.44 30.88C35.18 32.61 35.31 35.31 35.31 35.31C35.31 35.31 32.62 35.18 30.88 33.44C29.14 31.7 29.01 29.01 29.01 29.01C29.01 29.01 31.71 29.14 33.44 30.88Z" fill="currentColor"/>
+                      <path d="M20 40L23.84 31.88C24.41 30.69 24.41 29.31 23.84 28.12L21.5 23.17C22.23 22.82 22.81 22.22 23.15 21.49L28.12 23.84C29.31 24.41 30.69 24.41 31.88 23.84L40 20V20.82C40 21.65 39.58 22.42 38.88 22.86L32.36 27C30.92 27.92 29.08 27.92 27.64 27L25.89 25.89L27 27.64C27.92 29.08 27.92 30.92 27 32.36L22.86 38.88C22.42 39.58 21.65 40 20.82 40L20 40Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                ) : null}
+                <span className="font-mono text-[10px] uppercase tracking-wider font-semibold text-[#17233b]">
+                  {stop.name}
+                </span>
+                {stop.time && (
+                  <span className="font-mono text-[9px] text-[#17233b]/60 mt-0.5">
+                    {stop.time}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop/Tablet Stops overlay along the route */}
           <div className="hidden sm:grid grid-cols-7 gap-2 mt-4 text-center">
             {stops.map((stop, idx) => (
               <div key={idx} className="flex flex-col items-center">
@@ -225,9 +255,17 @@ export default function ConceptAndLocationSequence({ onOpenApartments }) {
             <div className="font-editorial text-lg sm:text-xl font-light uppercase tracking-wide mb-1">
               NAWAL SHIV BHAVA TOWER
             </div>
-            <div className="font-mono text-xs text-white/70 tracking-wider uppercase">
+            <div className="font-mono text-xs text-white/70 tracking-wider uppercase mb-4">
               AP COLONY &bull; GAYA
             </div>
+
+            <button
+              onClick={onOpenApartments}
+              className="w-full py-2.5 rounded-full border border-white/30 hover:border-white hover:bg-white/15 text-[10px] uppercase font-mono tracking-widest text-white transition-all flex items-center justify-center gap-1.5"
+            >
+              <span>View Residences</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
 
