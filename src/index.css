@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 16px;
+    background-color: #f3f3ec;
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #17233b;
+    overflow-x: clip;
+  }
+}
+
+/* Luxury Editorial Typography (Authentic ERA Residence Fonts) */
+.font-editorial {
+  font-family: 'ambroise-francois-std', 'Cormorant Garamond', Didot, Georgia, serif;
+}
+
+.font-italic-accent, .a2 {
+  font-family: 'sloop-script-three', 'Playfair Display', cursive;
+  font-style: italic;
+}
+
+/* Hairline dividers & outlines */
+.border-hairline {
+  border-color: rgba(23, 35, 59, 0.12);
+}
+
+.bg-surface-subtle {
+  background-color: rgba(23, 35, 59, 0.03);
+}
+
+/* Custom Scroll Progress Bar on Left Margin */
+.scroll-tracker-line {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 120px;
+  background-color: rgba(23, 35, 59, 0.15);
+  z-index: 40;
+}
+
+.scroll-tracker-thumb {
+  width: 1px;
+  background-color: #17233b;
+  transition: height 0.1s ease-out;
+}
+
+/* Text slide up hover effect */
+.hover-slide-parent {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.hover-slide-child {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hover-slide-parent:hover .hover-slide-child {
+  transform: translateY(-100%);
+}
+
+/* Hide scrollbar for clean aesthetics */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
